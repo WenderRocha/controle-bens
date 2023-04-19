@@ -12,6 +12,7 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Filters\SelectFilter;
 
 class LocalResource extends Resource
 {
@@ -25,10 +26,6 @@ class LocalResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Locais';
 
-    protected static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
 
     public static function form(Form $form): Form
     {
@@ -70,7 +67,8 @@ class LocalResource extends Resource
 
             ])
             ->filters([
-                //
+                SelectFilter::make('secretary')
+                    ->relationship('secretary', 'name')->label('Unidade Administrativa'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

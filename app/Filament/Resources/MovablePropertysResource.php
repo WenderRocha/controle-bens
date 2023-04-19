@@ -30,10 +30,6 @@ class MovablePropertysResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Bens Móveis';
 
-    protected static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
 
     public static function form(Form $form): Form
     {
@@ -155,8 +151,10 @@ class MovablePropertysResource extends Resource
             ->filters([
                 SelectFilter::make('departament_id')
                     ->relationship('departament', 'name')->label('Departamento'),
-                                SelectFilter::make('secretary_id')
-                                    ->relationship('secretary', 'name')->label('Unidade Administrativa'),
+
+                SelectFilter::make('secretary_id')
+                    ->relationship('secretary', 'name')->label('Unidade Administrativa'),
+
                 Filter::make('acquisition_data')
                     ->form([
                         Forms\Components\DatePicker::make('created_from')->label('Criado a partir de'),

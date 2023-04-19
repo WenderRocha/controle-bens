@@ -22,9 +22,9 @@ class AcquisitionTypeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-database';
 
-    protected static ?string $modelLabel = 'Tipo de Aquisição';
+    protected static ?string $modelLabel = 'Tipo de aquisição';
 
-    protected static ?string $pluralModelLabel = 'Tipos de Aquisições';
+    protected static ?string $pluralModelLabel = 'Tipos de aquisições';
 
 
 

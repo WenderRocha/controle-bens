@@ -25,10 +25,7 @@ class DepartamentsResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Departamentos';
 
-    protected static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
+
 
     public static function form(Form $form): Form
     {

@@ -20,12 +20,12 @@ class MovablePropertys extends Model
         return $this->belongsTo(Departaments::class);
     }
 
-    public function conservationState(): BelongsTo
+    public function conservation_type(): BelongsTo
     {
         return $this->belongsTo(ConservationState::class);
     }
 
-    public function aquisitionType(): BelongsTo
+    public function acquisition_type(): BelongsTo
     {
         return $this->belongsTo(AcquisitionType::class);
     }

@@ -22,9 +22,10 @@ use Archilex\ToggleIconColumn\Columns\ToggleIconColumn;
 class MovablePropertysResource extends Resource
 {
     protected static ?int $navigationSort = 2;
+
     protected static ?string $model = MovablePropertys::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clipboard';
+    protected static ?string $navigationIcon = 'heroicon-o-cube';
 
     protected static ?string $modelLabel = 'Ben Móvel';
 
@@ -154,6 +155,9 @@ class MovablePropertysResource extends Resource
 
                 SelectFilter::make('secretary_id')
                     ->relationship('secretary', 'name')->label('Unidade Administrativa'),
+
+                SelectFilter::make('acquisition_type')
+                    ->relationship('acquisition_type', 'name')->label('Tipo de Aquisição'),
 
                 Filter::make('acquisition_data')
                     ->form([

@@ -20,4 +20,9 @@ class Secretary extends Model
         return $this->hasMany(MovablePropertys::class);
     }
 
+    public function real_state_propertys(): HasMany
+    {
+        return $this->hasMany(MovablePropertys::class);
+    }
+
 }

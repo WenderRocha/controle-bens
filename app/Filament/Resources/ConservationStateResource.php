@@ -15,13 +15,17 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ConservationStateResource extends Resource
 {
+    protected static ?string $navigationGroup = 'Configurações';
+
     protected static ?string $model = ConservationState::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-eye';
 
     protected static ?string $modelLabel = 'Estado de Conservação';
 
     protected static ?string $pluralModelLabel = 'Estados de Conservação';
+
+
 
     public static function form(Form $form): Form
     {

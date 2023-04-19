@@ -5,26 +5,35 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\MovablePropertysResource\Pages;
 use App\Filament\Resources\MovablePropertysResource\RelationManagers;
 use App\Models\MovablePropertys;
+use App\Tables\Columns\FileDocument;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Archilex\ToggleIconColumn\Columns\ToggleIconColumn;
 
 class MovablePropertysResource extends Resource
 {
+    protected static ?int $navigationSort = 2;
     protected static ?string $model = MovablePropertys::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard';
 
     protected static ?string $modelLabel = 'Ben Móvel';
 
     protected static ?string $pluralModelLabel = 'Bens Móveis';
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {
@@ -104,6 +113,23 @@ class MovablePropertysResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('overturning_number')
+                    ->label('Tombamento N')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('acquisition_data')
+                    ->date('d/m/Y')
+                    ->label('Data da aquisição'),
+
+                FileDocument::make('fiscal_note')
+                    ->label('Nota Fiscal'),
+
+                Tables\Columns\TextColumn::make('description')
+                    ->label('Descrição do Bem')
+                    ->limit(30),
+
+
                 Tables\Columns\TextColumn::make('secretary.name')
                     ->label('Unidade Administrativa')
                     ->searchable()
@@ -120,13 +146,10 @@ class MovablePropertysResource extends Resource
                     ->label('Tipo de Aquisição')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('overturning_number')
-                    ->label('Tombamento N')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('acquisition_data')->date('d/m/Y')->label('Data da aquisição'),
-                Tables\Columns\ImageColumn::make('fiscal_note')->label('Nota Fiscal'),
-                Tables\Columns\TextColumn::make('description')->label('Descrição do Bem'),
+
+
+
+
                 Tables\Columns\TextColumn::make('value')->money('brl')->label('Valor do Item'),
             ])
             ->filters([

@@ -16,13 +16,17 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AcquisitionTypeResource extends Resource
 {
+    protected static ?string $navigationGroup = 'Configurações';
+
     protected static ?string $model = AcquisitionType::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-database';
 
     protected static ?string $modelLabel = 'Tipo de Aquisição';
 
     protected static ?string $pluralModelLabel = 'Tipos de Aquisições';
+
+
 
     public static function form(Form $form): Form
     {

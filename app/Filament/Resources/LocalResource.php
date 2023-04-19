@@ -15,13 +15,20 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class LocalResource extends Resource
 {
+    protected static ?int $navigationSort = 3;
+
     protected static ?string $model = Local::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-inbox';
+    protected static ?string $navigationIcon = 'heroicon-o-globe';
 
     protected static ?string $modelLabel = 'Local';
 
     protected static ?string $pluralModelLabel = 'Locais';
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {

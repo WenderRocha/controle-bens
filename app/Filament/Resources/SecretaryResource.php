@@ -15,13 +15,20 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SecretaryResource extends Resource
 {
+    protected static ?int $navigationSort = 1;
+
     protected static ?string $model = Secretary::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-globe';
+    protected static ?string $navigationIcon = 'heroicon-o-library';
 
     protected static ?string $modelLabel = 'Unidade Administrativa';
 
     protected static ?string $pluralModelLabel = 'Unidades Administrativas';
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {

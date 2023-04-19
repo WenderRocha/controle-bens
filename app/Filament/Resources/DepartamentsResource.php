@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DepartamentsResource extends Resource
 {
+    protected static ?string $navigationGroup = 'Configurações';
+
     protected static ?string $model = Departaments::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
@@ -22,6 +24,11 @@ class DepartamentsResource extends Resource
     protected static ?string $modelLabel = 'Departamento';
 
     protected static ?string $pluralModelLabel = 'Departamentos';
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {

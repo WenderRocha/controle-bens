@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b3a2aa1ebc7643c6ceb16cc1462c8d22",
+    "content-hash": "db6118323b7999de35487f05b0ce44eb",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -74,6 +74,87 @@
                 "source": "https://github.com/akaunting/laravel-money/tree/4.0.1"
             },
             "time": "2023-03-16T14:39:27+00:00"
+        },
+        {
+            "name": "archilex/filament-toggle-icon-column",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/archilex/filament-toggle-icon-column.git",
+                "reference": "9552871dd55cf767f52f3a2460b1f5d0ed488fdf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/archilex/filament-toggle-icon-column/zipball/9552871dd55cf767f52f3a2460b1f5d0ed488fdf",
+                "reference": "9552871dd55cf767f52f3a2460b1f5d0ed488fdf",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^2.0",
+                "illuminate/contracts": "^9.0|^10.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.13.5"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^6.0|^7.0",
+                "orchestra/testbench": "^7.0|^8.0",
+                "pestphp/pest": "^1.21",
+                "pestphp/pest-plugin-laravel": "^1.1",
+                "pestphp/pest-plugin-livewire": "^1.0",
+                "pestphp/pest-plugin-parallel": "^0.3",
+                "phpunit/phpunit": "^9.5|^10.0",
+                "spatie/laravel-ray": "^1.26"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Archilex\\ToggleIconColumn\\ToggleIconColumnServiceProvider"
+                    ],
+                    "aliases": {
+                        "ToggleIconColumn": "Archilex\\ToggleIconColumn\\Facades\\ToggleIconColumn"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Archilex\\ToggleIconColumn\\": "src",
+                    "Archilex\\ToggleIconColumn\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kenneth Sese",
+                    "email": "kmsese@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A toggle icon column for Filament",
+            "homepage": "https://github.com/archilex/filament-toggle-icon-column",
+            "keywords": [
+                "admin panel",
+                "archilex",
+                "column",
+                "filament-toggle-icon-column",
+                "laravel",
+                "tables"
+            ],
+            "support": {
+                "issues": "https://github.com/archilex/filament-toggle-icon-column/issues",
+                "source": "https://github.com/archilex/filament-toggle-icon-column/tree/v1.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/archilex",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-04-15T08:12:01+00:00"
         },
         {
             "name": "blade-ui-kit/blade-heroicons",

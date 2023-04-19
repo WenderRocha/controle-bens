@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\MovablePropertysResource\Pages;
 use App\Filament\Resources\MovablePropertysResource\RelationManagers;
+use App\Filament\Resources\MovablePropertysResource\Widgets\StatsReportsOverview;
 use App\Models\MovablePropertys;
 use App\Tables\Columns\FileDocument;
 use Filament\Forms;
@@ -191,4 +192,5 @@ class MovablePropertysResource extends Resource
             'index' => Pages\ManageMovablePropertys::route('/'),
         ];
     }
+
 }

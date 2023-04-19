@@ -16,4 +16,5 @@ class ManageMovablePropertys extends ManageRecords
             Actions\CreateAction::make(),
         ];
     }
+
 }

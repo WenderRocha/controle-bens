@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Local;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,15 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class LocalFactory extends Factory
 {
+
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Local::class;
+
+
     /**
      * Define the model's default state.
      *
@@ -17,7 +27,10 @@ class LocalFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'secretary_id' => rand(1,2),
+            'name' => fake()->name(),
+            'address' => fake()->address()
+
         ];
     }
 }

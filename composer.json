@@ -7,10 +7,12 @@
     "require": {
         "php": "^8.1",
         "alexjustesen/filament-spatie-laravel-activitylog": "^0.6.3",
+        "alperenersoy/filament-export": "^0.2.9",
         "archilex/filament-toggle-icon-column": "^1.0",
         "awcodes/overlook": "^1.0",
         "barryvdh/laravel-dompdf": "^2.0",
         "filament/filament": "^2.0",
+        "flowframe/laravel-trend": "^0.1.5",
         "guzzlehttp/guzzle": "^7.2",
         "laravel-frontend-presets/tall": "^6.0",
         "laravel/framework": "^10.8",

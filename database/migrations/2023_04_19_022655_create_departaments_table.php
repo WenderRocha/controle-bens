@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('departaments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('secretary_id')->constrained('secretaries');
             $table->string('name');
             $table->timestamps();
         });

@@ -2,8 +2,11 @@
 
 namespace App\Filament\Resources;
 
+use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Filament\Resources\RealStatePropertyResource\Pages;
 use App\Filament\Resources\RealStatePropertyResource\RelationManagers;
+use App\Models\MovablePropertys;
 use App\Models\RealStateProperty;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
@@ -22,7 +25,7 @@ class RealStatePropertyResource extends Resource
     protected static ?string $model = RealStateProperty::class;
     protected static ?string $navigationIcon = 'heroicon-o-library';
 
-    protected static ?string $modelLabel = 'Ben iMóvel';
+    protected static ?string $modelLabel = 'Bem iMóvel';
 
     protected static ?string $pluralModelLabel = 'Bens iMóveis';
 
@@ -77,7 +80,7 @@ class RealStatePropertyResource extends Resource
                     ->label('Data da aquisição')->date('d/m/Y'),
 
                 Tables\Columns\TextColumn::make('description')
-                    ->label('Descriçaõ do Ben')
+                    ->label('Descriçaõ do Bem')
                     ->searchable()
                     ->sortable()
                     ->limit(30),
@@ -136,6 +139,12 @@ class RealStatePropertyResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
+            ])->headerActions([
+                FilamentExportHeaderAction::make('Exportar')->extraViewData(fn ($action) => [
+                    'recordCount' => $action->getRecords()->count(),
+                    'date' => now()->format('d/m/Y H:i'),
+                    'sum' => number_format(RealStateProperty::query()->sum('value'), 2, ',', '.')
+                ])
             ]);
     }
 

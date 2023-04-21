@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('movable_propertys', function (Blueprint $table) {
             $table->id();
             $table->foreignId('secretary_id')->constrained('secretaries');
-            $table->foreignId('departament_id')->constrained('departaments');
+            $table->foreignId('local_id')->nullable()->constrained('locals');
+            $table->foreignId('departament_id')->nullable()->constrained('departaments');
             $table->foreignId('conservation_type_id')->constrained('conservation_states');
             $table->foreignId('acquisition_type_id')->constrained('acquisition_types');
             $table->string('overturning_number');
             $table->string('acquisition_data');
-            $table->string('fiscal_note');
+            $table->string('fiscal_note')->nullable();
             $table->string('description');
             $table->decimal('value', 12,2);
             $table->timestamps();

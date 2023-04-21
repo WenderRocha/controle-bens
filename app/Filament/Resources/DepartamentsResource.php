@@ -25,16 +25,17 @@ class DepartamentsResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Departamentos';
 
-
-
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('secretary_id')
+                    ->relationship('secretary', 'name')
+                    ->label('Unidade Administrativa')
+                    ->required(),
                 Forms\Components\TextInput::make('name')
-                    ->label('Nome')
                     ->required()
-                    ->maxLength(255)->columnSpanFull(),
+                    ->maxLength(255),
             ]);
     }
 
@@ -42,11 +43,13 @@ class DepartamentsResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('secretary.name')
+                    ->label('Secretária')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('name')
-                ->label('Nome')
-                ->searchable()
-                ->sortable(),
-
+                    ->label('Departamento')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Criado em')->searchable()->sortable()
+                    ->dateTime()->date('d/m/Y'),
             ])
             ->filters([
                 //

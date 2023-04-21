@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Archilex\ToggleIconColumn\Columns\ToggleIconColumn;
 
-class MovablePropertysResource extends Resource
+class MovablePropertysResourcebckup extends Resource
 {
     protected static ?int $navigationSort = 2;
 
@@ -70,9 +70,10 @@ class MovablePropertysResource extends Resource
 
 
                 Grid::make(3)->schema([
-                    Forms\Components\Select::make('local_id')
+                    Forms\Components\Select::make('secretary_id')
                         ->label('Local')
-                        ->relationship('local', 'name'),
+                        ->relationship('secretary', 'name')
+                        ->required(),
 
 
                     Forms\Components\Select::make('secretary_id')
@@ -82,7 +83,8 @@ class MovablePropertysResource extends Resource
 
                     Forms\Components\Select::make('departament_id')
                         ->label('Departamento')
-                        ->relationship('departament', 'name'),
+                        ->relationship('departament', 'name')
+                        ->required(),
                 ]),
 
 
@@ -137,16 +139,12 @@ class MovablePropertysResource extends Resource
                     ->label('Unidade Administrativa')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('local.name')
-                    ->label('Local')
-                    ->searchable()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('departament.name')
                     ->label('Departamento')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('conservation_type.name')
-                    ->label('Condição')
+                    ->label('Estado de Conservação')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('acquisition_type.name')
@@ -157,10 +155,6 @@ class MovablePropertysResource extends Resource
                 Tables\Columns\TextColumn::make('value')->money('brl')->label('Valor do Item'),
             ])
             ->filters([
-
-                SelectFilter::make('local_id')
-                    ->relationship('local', 'name')->label('Local'),
-
                 SelectFilter::make('departament_id')
                     ->relationship('departament', 'name')->label('Departamento'),
 

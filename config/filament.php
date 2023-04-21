@@ -1,5 +1,8 @@
 <?php
 
+use App\Filament\Resources\MovablePropertysResource\Widgets\MovablePropertysChart;
+use App\Filament\Resources\MovablePropertysResource\Widgets\StatsReportsOverview;
+use App\Filament\Resources\RealStatePropertyResource\Widgets\RealStatePropertyChart;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Http\Middleware\MirrorConfigToSubpackages;
@@ -140,7 +143,10 @@ return [
         'path' => app_path('Filament/Widgets'),
         'register' => [
 //            Widgets\AccountWidget::class,
+            StatsReportsOverview::class,
             \Awcodes\Overlook\Overlook::class,
+            MovablePropertysChart::class,
+            RealStatePropertyChart::class,
         ],
     ],
 

@@ -2,11 +2,12 @@
 
 namespace App\Filament\Resources\MovablePropertysResource\Pages;
 
+use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
 use App\Filament\Resources\MovablePropertysResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ManageRecords;
 
-class ManageMovablePropertys extends ManageRecords
+class ManageMovablePropertysbackup extends ManageRecords
 {
     protected static string $resource = MovablePropertysResource::class;
 
@@ -16,4 +17,12 @@ class ManageMovablePropertys extends ManageRecords
             Actions\CreateAction::make(),
         ];
     }
+
+    protected function getTableBulkActions(): array
+    {
+        return [
+            FilamentExportBulkAction::make('Export'),
+        ];
+    }
+
 }

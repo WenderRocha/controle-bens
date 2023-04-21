@@ -25,4 +25,9 @@ class Secretary extends Model
         return $this->hasMany(MovablePropertys::class);
     }
 
+    public function departaments(): HasMany
+    {
+        return $this->hasMany(Departaments::class);
+    }
+
 }

@@ -62,50 +62,61 @@
             text-align: center;
             font-size: 22px;
         }
+        .subtitle{
+            font-size: 16px;
+        }
         .label{
             font-weight: bold;
             color: #242424;
         }
         .info{
-            margin: 30px 0 30px 0;
+            margin: 30px 0 40px 0;
+            display: inline-block;
+            max-width: 50%;
         }
 
     </style>
 </head>
 <body>
-    <h1 class="title">Gerenciador de Patrimônio</h1>
-    <hr>
-   <div class="info">
-       <p><b>Data da emissão:</b> {{ $date }}</p>
-       <p><b>Quantidade de Bens:</b> {{ $recordCount }}</p>
-       <p><b>Valor total:</b> R$ {{ $sum }}</p>
-   </div>
+<h1 class="title">Gerenciador de Patrimônio</h1>
+<hr>
+
+<div class="info">
+    <h2 class="subtitle">Governo de São Domingos do Araguaia</h2>
     <table>
         <tr>
+            <th><b>Data da emissão: </b> 25/04/2023</th>
+            <th><b>Quantidade de Bens:</b> 10</th>
+            <th><b>Valor total:</b> R$ 500,00</th>
+        </tr>
+    </table>
+</div>
+<table>
+    <tr>
+        @foreach ($columns as $column)
+            <th>
+                <span class="label">{{ $column->getLabel() }}</span>
+            </th>
+        @endforeach
+    </tr>
+    @foreach ($rows as $row)
+        <tr>
             @foreach ($columns as $column)
-                <th>
-                    <span class="label">{{ $column->getLabel() }}</span>
-                </th>
+                <td>
+
+                    @if(stripos($row[$column->getName()], '.pdf'))
+                        <a href="{{ public_path("/storage/".$row[$column->getName()]) }}" target="_blank" download>Baixar Nota</a>
+
+                    @else
+                        {{ $row[$column->getName()] }}
+                    @endif
+
+
+
+                </td>
             @endforeach
         </tr>
-        @foreach ($rows as $row)
-            <tr>
-                @foreach ($columns as $column)
-                    <td>
-
-                        @if(stripos($row[$column->getName()], '.pdf'))
-                            <a href="{{ public_path("/storage/".$row[$column->getName()]) }}" target="_blank" download>Baixar Nota</a>
-
-                        @else
-                            {{ $row[$column->getName()] }}
-                        @endif
-
-
-
-                    </td>
-                @endforeach
-            </tr>
-        @endforeach
-    </table>
+    @endforeach
+</table>
 </body>
 </html>

@@ -17,7 +17,7 @@ class StatsReportsOverview extends BaseWidget
                 ->description('Bens Moveis')
                 ->descriptionIcon('heroicon-o-cube'),
 
-            Card::make('Valor total', "R$ ".number_format(MovablePropertys::query()->sum('value'), 2, ',', '.'))
+            Card::make('Valor total', number_format(MovablePropertys::query()->sum('value'), 2, ',', '.'))
                 ->description('Bens Móveis')
                 ->descriptionIcon('heroicon-o-cube')
                 ->chart([7, 2, 10, 3, 15, 4, 17])
@@ -27,7 +27,7 @@ class StatsReportsOverview extends BaseWidget
                 ->description('Bens Imóveis')
                 ->descriptionIcon('heroicon-o-library'),
 
-            Card::make('Valor total', "R$ ".number_format(RealStateProperty::query()->sum('value'),2, ',', '.'))
+            Card::make('Valor total', number_format(RealStateProperty::query()->sum('value'),2, ',', '.'))
                 ->description('Bens Imóveis')
                 ->descriptionIcon('heroicon-o-library')
                 ->chart([7, 2, 10, 3, 15, 4, 17])

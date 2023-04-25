@@ -6,12 +6,15 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Pages\Page;
 use Filament\Resources\Form;
+use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Hash;
 
 class UserResource extends Resource
 {
@@ -36,9 +39,13 @@ class UserResource extends Resource
                     ->email()
                     ->required()
                     ->maxLength(255),
+
                 Forms\Components\TextInput::make('password')
+                    ->label('Senha')
                     ->password()
-                    ->required()
+                    ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                    ->dehydrated(fn ($state) => filled($state))
+                    ->required(fn (Page $livewire) => ($livewire instanceof CreateRecord))
                     ->maxLength(255),
             ]);
     }

@@ -46,9 +46,15 @@ class SecretaryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                ->label('Nome')->searchable()->sortable(),
+                ->label('Nome')
+                    ->searchable()
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('address')
-                ->label('Endereço')->searchable()->sortable(),
+                ->label('Endereço')
+                    ->searchable()
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Criado Em')
                     ->dateTime('d/m/Y'),

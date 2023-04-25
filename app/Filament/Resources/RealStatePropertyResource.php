@@ -18,6 +18,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\TextInput;
 
 class RealStatePropertyResource extends Resource
 {
@@ -34,7 +35,7 @@ class RealStatePropertyResource extends Resource
         return $form
             ->schema([
 
-                Grid::make(3)->schema([
+                Grid::make(4)->schema([
 
                     Forms\Components\DatePicker::make('acquisition_data')
                         ->label('Data da aquisição')
@@ -49,6 +50,11 @@ class RealStatePropertyResource extends Resource
                         ->label('Tipo de aquisição')
                         ->relationship('acquisition_type', 'name')
                         ->required(),
+
+                    Forms\Components\TextInput::make('value')
+                        ->label('Valor')
+                        ->required()
+                        ->mask(fn (TextInput\Mask $mask) => $mask->money(prefix: 'R$', thousandsSeparator: ',', decimalPlaces: 2))
                 ]),
 
 
@@ -62,10 +68,8 @@ class RealStatePropertyResource extends Resource
                     Forms\Components\TextInput::make('address')
                         ->label('Endereço')
                         ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('value')
-                        ->label('Valor')
-                        ->required(),
+                        ->maxLength(255)->columnSpanFull(),
+
                 ]),
 
 
@@ -102,7 +106,7 @@ class RealStatePropertyResource extends Resource
                 ->label('Endereço'),
 
                 Tables\Columns\TextColumn::make('value')
-                    ->label('Valor'),
+                    ->label('Valor')->money('brl'),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Cadastro')

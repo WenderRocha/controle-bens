@@ -43,10 +43,10 @@ class DepartamentsResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('secretary.name')
-                    ->label('Secretária')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Departamento')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('secretary.name')
+                    ->label('Secretária')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Criado em')->searchable()->sortable()
                     ->dateTime()->date('d/m/Y'),

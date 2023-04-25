@@ -11,6 +11,7 @@ use App\Models\MovablePropertys;
 use App\Tables\Columns\FileDocument;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\TextInput\Mask;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -21,6 +22,8 @@ use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Archilex\ToggleIconColumn\Columns\ToggleIconColumn;
+use PhpParser\Node\Expr\Cast\Bool_;
+use Filament\Forms\Components\TextInput;
 
 class MovablePropertysResource extends Resource
 {
@@ -33,7 +36,6 @@ class MovablePropertysResource extends Resource
     protected static ?string $modelLabel = 'Bem Móvel';
 
     protected static ?string $pluralModelLabel = 'Bens Móveis';
-
 
     public static function form(Form $form): Form
     {
@@ -52,7 +54,6 @@ class MovablePropertysResource extends Resource
                             ->label('Data da aquisição')
                             ->required(),
 
-
                         Forms\Components\FileUpload::make('fiscal_note')
                             ->acceptedFileTypes(['application/pdf'])
                             ->enableDownload()
@@ -66,7 +67,8 @@ class MovablePropertysResource extends Resource
                 Forms\Components\TextInput::make('description')
                     ->label('Descrição')
                     ->required()
-                    ->maxLength(255)->columnSpanFull(),
+                    ->maxLength(255)
+                    ->columnSpanFull(),
 
 
                 Grid::make(3)->schema([
@@ -103,7 +105,9 @@ class MovablePropertysResource extends Resource
 
 
                         Forms\Components\TextInput::make('value')
+                            ->required()
                             ->label('Valor do item')
+                            ->mask(fn (TextInput\Mask $mask) => $mask->money(prefix: 'R$', thousandsSeparator: ',', decimalPlaces: 2))
 
                     ]),
 
@@ -115,6 +119,8 @@ class MovablePropertysResource extends Resource
 
     public static function table(Table $table): Table
     {
+
+
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('overturning_number')
@@ -130,6 +136,8 @@ class MovablePropertysResource extends Resource
                     ->label('Nota Fiscal'),
 
                 Tables\Columns\TextColumn::make('description')
+                    ->searchable()
+                    ->sortable()
                     ->label('Descrição do Bem'),
 
 
@@ -158,14 +166,19 @@ class MovablePropertysResource extends Resource
             ])
             ->filters([
 
+
                 SelectFilter::make('local_id')
-                    ->relationship('local', 'name')->label('Local'),
+                    ->relationship('local', 'name')
+                    ->label('Local')
+                    ->searchable(),
 
                 SelectFilter::make('departament_id')
                     ->relationship('departament', 'name')->label('Departamento'),
 
                 SelectFilter::make('secretary_id')
-                    ->relationship('secretary', 'name')->label('Unidade Administrativa'),
+                    ->relationship('secretary', 'name')
+                    ->label('Unidade Administrativa')
+                    ->searchable(),
 
                 SelectFilter::make('acquisition_type')
                     ->relationship('acquisition_type', 'name')->label('Tipo de Aquisição'),
@@ -197,10 +210,16 @@ class MovablePropertysResource extends Resource
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ])->headerActions([
+
+               // $local_id = (isset($_GET['tableFilters[local_id][value]'] ) && !empty($_GET['tableFilters[local_id][value]'])),
+
+
                 FilamentExportHeaderAction::make('Exportar')->extraViewData(fn ($action) => [
                     'recordCount' => $action->getRecords()->count(),
                     'date' => now()->format('d/m/Y H:i'),
-                    'sum' => number_format(MovablePropertys::query()->sum('value'), 2, ',', '.')
+                   // 'sum' => (isset($_GET['tableFilters'])) ? number_format(MovablePropertys::query()->where('local_id', '=', (int)$_GET['tableFilters']['local_id']['value'])->sum('value'), 2, ',', '.')   : number_format(MovablePropertys::query()->sum('value'), 2, ',', '.')
+
+                    'sum' => (!is_null($action->getTable()->getLivewire()->tableFilters['local_id']['value'])) ? number_format(MovablePropertys::query()->where('local_id', '=', (int)$action->getTable()->getLivewire()->tableFilters['local_id']['value'])->sum('value'), 2, ',', '.') : number_format(MovablePropertys::query()->sum('value'), 2, ',', '.')
                 ])
             ]);
     }

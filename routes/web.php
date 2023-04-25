@@ -14,11 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'welcome')->name('home');
-Route::get('/log', function () {
-    activity()->log('Look mum, I logged something');
-});
+//Route::view('/', 'welcome')->name('home');
 
-Route::get('/pdf', function () {
-   return view('vendor/filament-export/pdf');
-});
+
+//Route::get('/pdf', function () {
+//   return view('vendor/filament-export/pdf');
+//});

@@ -147,7 +147,7 @@ class RealStatePropertyResource extends Resource
                 FilamentExportHeaderAction::make('Exportar')->extraViewData(fn ($action) => [
                     'recordCount' => $action->getRecords()->count(),
                     'date' => now()->format('d/m/Y H:i'),
-                    'sum' => number_format(RealStateProperty::query()->sum('value'), 2, ',', '.')
+                    'sum' => (!is_null($action->getTable()->getLivewire()->tableFilters['secretary_id']['value'])) ? number_format(RealStateProperty::query()->where('secretary_id', '=', (int)$action->getTable()->getLivewire()->tableFilters['secretary_id']['value'])->sum('value'), 2, ',', '.') : number_format(RealStateProperty::query()->sum('value'), 2, ',', '.')
                 ])
             ]);
     }

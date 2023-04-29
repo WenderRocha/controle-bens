@@ -85,9 +85,9 @@
     <h2 class="subtitle">Governo de São Domingos do Araguaia</h2>
     <table>
         <tr>
-            <th><b>Data da emissão: </b> 25/04/2023</th>
-            <th><b>Quantidade de Bens:</b> 10</th>
-            <th><b>Valor total:</b> R$ 500,00</th>
+            <th><b>Data da emissão: </b> {{ $date }}</th>
+            <th><b>Quantidade de Bens:</b> {{ $recordCount }}</th>
+            <th><b>Valor total:</b> R$ {{ $sum }}</th>
         </tr>
     </table>
 </div>

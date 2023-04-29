@@ -57,6 +57,8 @@ class MovablePropertysResource extends Resource
 
                         Forms\Components\FileUpload::make('fiscal_note')
                             ->acceptedFileTypes(['application/pdf'])
+                            ->disk('public')
+                            ->directory('notas-fiscais')
                             ->enableDownload()
                             ->label('Nota Fiscal')
 

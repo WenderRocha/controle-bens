@@ -8,6 +8,7 @@ use App\Filament\Resources\MovablePropertysResource\Pages;
 use App\Filament\Resources\MovablePropertysResource\RelationManagers;
 use App\Filament\Resources\MovablePropertysResource\Widgets\StatsReportsOverview;
 use App\Models\MovablePropertys;
+use App\Models\RealStateProperty;
 use App\Tables\Columns\FileDocument;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
@@ -219,7 +220,8 @@ class MovablePropertysResource extends Resource
                     'date' => now()->format('d/m/Y H:i'),
                    // 'sum' => (isset($_GET['tableFilters'])) ? number_format(MovablePropertys::query()->where('local_id', '=', (int)$_GET['tableFilters']['local_id']['value'])->sum('value'), 2, ',', '.')   : number_format(MovablePropertys::query()->sum('value'), 2, ',', '.')
 
-                    'sum' => (!is_null($action->getTable()->getLivewire()->tableFilters['local_id']['value'])) ? number_format(MovablePropertys::query()->where('local_id', '=', (int)$action->getTable()->getLivewire()->tableFilters['local_id']['value'])->sum('value'), 2, ',', '.') : number_format(MovablePropertys::query()->sum('value'), 2, ',', '.')
+                   // 'sum' => (!is_null($action->getTable()->getLivewire()->tableFilters['local_id']['value'])) ? number_format(MovablePropertys::query()->where('local_id', '=', (int)$action->getTable()->getLivewire()->tableFilters['local_id']['value'])->sum('value'), 2, ',', '.') : number_format(MovablePropertys::query()->sum('value'), 2, ',', '.')
+                    'sum' => self::sumActiveFilters($action)
                 ])
             ]);
     }
@@ -229,6 +231,43 @@ class MovablePropertysResource extends Resource
         return [
             'index' => Pages\ManageMovablePropertys::route('/'),
         ];
+    }
+
+    public static function sumActiveFilters($action)
+    {
+        $query = MovablePropertys::query();
+
+        if (!is_null($action->getTable()->getLivewire()->tableFilters['local_id']['value'])) {
+            $query->where('local_id', '=', (int)$action->getTable()->getLivewire()->tableFilters['local_id']['value']);
+        }
+
+        if (!is_null($action->getTable()->getLivewire()->tableFilters['departament_id']['value'])) {
+            $query->where('departament_id', '=', (int)$action->getTable()->getLivewire()->tableFilters['departament_id']['value']);
+        }
+
+        if (!is_null($action->getTable()->getLivewire()->tableFilters['secretary_id']['value'])) {
+            $query->where('secretary_id', '=', (int)$action->getTable()->getLivewire()->tableFilters['secretary_id']['value']);
+        }
+
+        if (!is_null($action->getTable()->getLivewire()->tableFilters['acquisition_type']['value'])) {
+            $query->where('acquisition_type_id', '=', (int)$action->getTable()->getLivewire()->tableFilters['acquisition_type']['value']);
+        }
+
+        if (!is_null($action->getTable()->getLivewire()->tableFilters['conservation_type']['value'])) {
+            $query->where('conservation_type_id', '=', (int)$action->getTable()->getLivewire()->tableFilters['conservation_type']['value']);
+        }
+
+        if (!is_null($action->getTable()->getLivewire()->tableFilters['acquisition_data']['created_from']) && !is_null($action->getTable()->getLivewire()->tableFilters['acquisition_data']['created_until'])) {
+
+            $startDate = $action->getTable()->getLivewire()->tableFilters['acquisition_data']['created_from'];
+            $endDate = $action->getTable()->getLivewire()->tableFilters['acquisition_data']['created_until'];
+
+            $query->whereBetween('created_at', [$startDate, $endDate]);
+        }
+
+        $value = $query->sum('value');
+
+        return number_format($value, 2, ',', '.');
     }
 
 

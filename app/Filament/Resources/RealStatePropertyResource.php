@@ -147,7 +147,7 @@ class RealStatePropertyResource extends Resource
                 FilamentExportHeaderAction::make('Exportar')->extraViewData(fn ($action) => [
                     'recordCount' => $action->getRecords()->count(),
                     'date' => now()->format('d/m/Y H:i'),
-                    'sum' => (!is_null($action->getTable()->getLivewire()->tableFilters['secretary_id']['value'])) ? number_format(RealStateProperty::query()->where('secretary_id', '=', (int)$action->getTable()->getLivewire()->tableFilters['secretary_id']['value'])->sum('value'), 2, ',', '.') : number_format(RealStateProperty::query()->sum('value'), 2, ',', '.')
+                    'sum' => self::sumActiveFilters($action)
                 ])
             ]);
     }
@@ -157,5 +157,30 @@ class RealStatePropertyResource extends Resource
         return [
             'index' => Pages\ManageRealStateProperties::route('/'),
         ];
+    }
+
+    public static function sumActiveFilters($action)
+    {
+        $query = RealStateProperty::query();
+
+        if (!is_null($action->getTable()->getLivewire()->tableFilters['secretary_id']['value'])) {
+            $query->where('secretary_id', '=', (int)$action->getTable()->getLivewire()->tableFilters['secretary_id']['value']);
+        }
+
+        if (!is_null($action->getTable()->getLivewire()->tableFilters['acquisition_type']['value'])) {
+            $query->where('acquisition_type_id', '=', (int)$action->getTable()->getLivewire()->tableFilters['acquisition_type']['value']);
+        }
+
+        if (!is_null($action->getTable()->getLivewire()->tableFilters['acquisition_data']['created_from']) && !is_null($action->getTable()->getLivewire()->tableFilters['acquisition_data']['created_until'])) {
+
+            $startDate = $action->getTable()->getLivewire()->tableFilters['acquisition_data']['created_from'];
+            $endDate = $action->getTable()->getLivewire()->tableFilters['acquisition_data']['created_until'];
+
+            $query->whereBetween('created_at', [$startDate, $endDate]);
+        }
+
+        $value = $query->sum('value');
+
+        return number_format($value, 2, ',', '.');
     }
 }

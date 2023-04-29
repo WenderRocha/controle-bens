@@ -105,8 +105,7 @@
                 <td>
 
                     @if(stripos($row[$column->getName()], '.pdf'))
-                        <a href="{{ public_path("/storage/".$row[$column->getName()]) }}" target="_blank" download>Baixar Nota</a>
-
+                        <a href="{{ asset("/public/storage/".$row[$column->getName()]) }}" target="_blank">Baixar Nota</a>
                     @else
                         {{ $row[$column->getName()] }}
                     @endif

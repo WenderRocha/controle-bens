@@ -106,8 +106,11 @@
 
                     @if(stripos($row[$column->getName()], '.pdf'))
                         <a href="{{ asset("/public/storage/".$row[$column->getName()]) }}" target="_blank">Baixar Nota</a>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> ccc9f42955b41bfda8dd35c43d5e4e72079af5c7
                     @else
                         {{ $row[$column->getName()] }}
                     @endif

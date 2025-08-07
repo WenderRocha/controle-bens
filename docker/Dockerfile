@@ -1,5 +1,5 @@
 # Use webdevops/php-nginx as the base image
-FROM webdevops/php-nginx:8.3
+FROM webdevops/php-nginx:8.1
 
 # Web Document Root
 ENV WEB_DOCUMENT_ROOT=/app/public

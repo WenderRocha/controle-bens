@@ -22,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::unguard();
-        URL::forceHttps();
+        if (env('APP_ENV') === 'production') {
+            URL::forceSchema('https');
+        }
     }
 }
